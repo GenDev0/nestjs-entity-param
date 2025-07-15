@@ -1,24 +1,17 @@
-import {
-  Injectable,
-  PipeTransform,
-  ArgumentMetadata,
-  NotFoundException,
-} from "@nestjs/common";
+// src/pipes/entity-exists.pipe.ts
+import { PipeTransform, NotFoundException } from "@nestjs/common";
 import { FindById } from "../interfaces/find-by-id.interface";
 
-@Injectable()
 export class EntityExistsPipe<T> implements PipeTransform<number, Promise<T>> {
   constructor(
     private readonly service: FindById<T>,
-    private readonly entityName: string = "Entity"
+    private readonly entityName = "Entity"
   ) {}
 
-  async transform(value: number, metadata: ArgumentMetadata): Promise<T> {
-    const entity = await this.service.findById(value);
+  async transform(id: number): Promise<T> {
+    const entity = await this.service.findById(id);
     if (!entity) {
-      throw new NotFoundException(
-        `${this.entityName} with ID ${value} not found`
-      );
+      throw new NotFoundException(`${this.entityName} with ID ${id} not found`);
     }
     return entity;
   }

@@ -1,17 +1,13 @@
+// src/decorators/entity-param.decorator.ts
 import { Param, ParseIntPipe } from "@nestjs/common";
-import { EntityExistsPipe } from "../pipes/entity-exists.pipe";
-import { FindById } from "../interfaces/find-by-id.interface";
 
-export function EntityParam<T>(
+/**
+ * Used like:
+ * @EntityParam('id', 'PostExistsPipe')
+ */
+export function EntityParam(
   param: string,
-  service: FindById<T>,
-  entityName: string
+  pipeToken: string
 ): ParameterDecorator {
-  return function (target, propertyKey, parameterIndex) {
-    Param(param, ParseIntPipe, new EntityExistsPipe<T>(service, entityName))(
-      target,
-      propertyKey,
-      parameterIndex
-    );
-  };
+  return Param(param, ParseIntPipe, pipeToken as any);
 }
