@@ -1,6 +1,6 @@
 {
   "name": "@gendev0/nestjs-entity-param",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reusable NestJS decorator + pipe to validate and inject entities by param.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
