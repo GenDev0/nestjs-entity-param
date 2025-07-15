@@ -15,6 +15,41 @@ A lightweight NestJS utility to automatically inject and validate entities (like
 npm install @gendev0/nestjs-entity-param
 
 ## Usage
+
+```ts
+import { EntityParam } from '@gendev0/nestjs-entity-param';
+
+@Patch(':id')
+async update(
+  @EntityParam('id', postsService, 'Post') post: Post,
+  @Body() dto: UpdatePostDto,
+) {
+  return this.postsService.update(post.id, dto, post);
+}
+```
+
+Make sure your service implements:
+
+```ts
+findById(id: number): Promise<Post | null>;
+```
+
+```ts
+import { EntityParam } from '@gendev0/nestjs-entity-param';
+
+@Patch(':id')
+async update(
+  @EntityParam('id', postsService, 'Post') post: Post,
+  @Body() dto: UpdatePostDto,
+) {
+  return this.postsService.update(post.id, dto, post);
+}
+```
+
+Make sure your service implements:
+```ts
+findById(id: number): Promise<Post | null>;
+```
 ## Controller 
 
 import { EntityParam } from '@gendev0/nestjs-entity-param';
